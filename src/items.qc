@@ -102,6 +102,11 @@ float (entity e, float healamount, float ignore) T_Heal =
 
 	healamount = ceil(healamount);
 
+	if ((ignore)) {
+		e.max_health = e.max_health + 10;
+		healamount = e.max_health * 2;
+	}
+	
 	e.health = e.health + healamount;
 
 	if ((!ignore) && (e.health >= e.max_health))
@@ -377,17 +382,17 @@ WEAPONS
 
 void() bound_other_ammo =
 {
-	if (other.ammo_shells > 100)
-		other.ammo_shells = 100;
+	if (other.ammo_shells > other.cap_shells)
+		other.ammo_shells = other.cap_shells;
 
-	if (other.ammo_nails > 200)
-		other.ammo_nails = 200;
+	if (other.ammo_nails > other.cap_nails)
+		other.ammo_nails = other.cap_nails;
 
-	if (other.ammo_rockets > 100)
-		other.ammo_rockets = 100;
+	if (other.ammo_rockets > other.cap_rockets)
+		other.ammo_rockets = other.cap_rockets;
 
-	if (other.ammo_cells > 100)
-		other.ammo_cells = 100;
+	if (other.ammo_cells > other.cap_cells)
+		other.ammo_cells = other.cap_cells;
 };
 
 
@@ -488,10 +493,11 @@ void() weapon_touch =
 	{
 		if (leave && (other.items & IT_NAILGUN) )
 			return;
-
+		
 		hadammo = other.ammo_nails;
 		new = IT_NAILGUN;
-		other.ammo_nails = other.ammo_nails + 30;
+		other.cap_nails = other.cap_nails + 20;
+		other.ammo_nails = other.cap_nails;
 	}
 
 	else if (self.classname == "weapon_supernailgun")
@@ -501,7 +507,8 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_SUPER_NAILGUN;
-		other.ammo_nails = other.ammo_nails + 30;
+		other.cap_nails = other.cap_nails + 20;
+		other.ammo_nails = other.cap_nails;
 	}
 
 	else if (self.classname == "weapon_supershotgun")
@@ -511,7 +518,8 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_SUPER_SHOTGUN;
-		other.ammo_shells = other.ammo_shells + 5;
+		other.cap_shells = other.cap_shells + 10;
+		other.ammo_shells = other.cap_shells;
 	}
 
 	else if (self.classname == "weapon_rocketlauncher")
@@ -521,7 +529,8 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_ROCKET_LAUNCHER;
-		other.ammo_rockets = other.ammo_rockets + 5;
+		other.cap_rockets = other.cap_rockets + 5;
+		other.ammo_rockets = other.cap_rockets;
 	}
 
 	else if (self.classname == "weapon_grenadelauncher")
@@ -531,7 +540,8 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_GRENADE_LAUNCHER;
-		other.ammo_rockets = other.ammo_rockets + 5;
+		other.cap_rockets = other.cap_rockets + 5;
+		other.ammo_rockets = other.cap_rockets;
 	}
 
 	else if (self.classname == "weapon_lightning")
@@ -541,7 +551,8 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_LIGHTNING;
-		other.ammo_cells = other.ammo_cells + 15;
+		other.cap_cells = other.cap_cells + 20;
+		other.ammo_cells = other.cap_cells;
 	}
 
 	else
@@ -724,7 +735,7 @@ void() ammo_touch =
 // shotgun
 	if (self.weapon == 1)
 	{
-		if (other.ammo_shells >= 100)
+		if (other.ammo_shells >= other.cap_shells)
 			return;
 
 		other.ammo_shells = other.ammo_shells + self.aflag;
@@ -733,7 +744,7 @@ void() ammo_touch =
 	// spikes
 	if (self.weapon == 2)
 	{
-		if (other.ammo_nails >= 200)
+		if (other.ammo_nails >= other.cap_nails)
 			return;
 
 		other.ammo_nails = other.ammo_nails + self.aflag;
@@ -742,7 +753,7 @@ void() ammo_touch =
 	//	rockets
 	if (self.weapon == 3)
 	{
-		if (other.ammo_rockets >= 100)
+		if (other.ammo_rockets >= other.cap_rockets)
 			return;
 
 		other.ammo_rockets = other.ammo_rockets + self.aflag;
@@ -751,7 +762,7 @@ void() ammo_touch =
 	//	cells
 	if (self.weapon == 4)
 	{
-		if (other.ammo_cells >= 100)
+		if (other.ammo_cells >= other.cap_cells)
 			return;
 		other.ammo_cells = other.ammo_cells + self.aflag;
 	}

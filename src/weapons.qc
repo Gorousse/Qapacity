@@ -1075,9 +1075,18 @@ void() CheatCommand =
 	if (deathmatch || coop)
 		return;
 
-	self.ammo_rockets = 100;
-	self.ammo_nails = 200;
-	self.ammo_shells = 100;
+	// Increase ammo cap to max
+	self.cap_rockets = 100;
+	self.cap_nails = 200;
+	self.cap_shells = 100;
+	self.cap_cells = 100;
+
+	// Set ammo to max
+	self.ammo_shells = self.cap_shells;
+	self.ammo_nails = self.cap_nails;
+	self.ammo_rockets = self.cap_rockets;
+	self.ammo_cells = self.cap_cells;
+
 	self.items = self.items |
 		IT_AXE |
 		IT_SHOTGUN |
@@ -1088,7 +1097,6 @@ void() CheatCommand =
 		IT_ROCKET_LAUNCHER |
 		IT_KEY1 | IT_KEY2;
 
-	self.ammo_cells = 100;
 	self.items = self.items | IT_LIGHTNING;
 
 	self.weapon = IT_ROCKET_LAUNCHER;

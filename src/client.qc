@@ -58,8 +58,8 @@ void() SetChangeParms =
 	self.items = self.items - (self.items & (IT_KEY1 | IT_KEY2 | IT_INVISIBILITY | IT_INVULNERABILITY | IT_SUIT | IT_QUAD) );
 
 // cap super health
-	if (self.health > 100)
-		self.health = 100;
+	if (self.health > self.max_health)
+		self.health = self.max_health;
 
 	if (self.health < 50)
 		self.health = 50;
@@ -80,21 +80,33 @@ void() SetChangeParms =
 	parm8 = self.weapon;
 	parm9 = self.armortype * 100;
 
+	parm10 = self.max_health;
+	parm11 = self.cap_shells;
+	parm12 = self.cap_nails;
+	parm13 = self.cap_rockets;
+	parm14 = self.cap_cells;
+
 	parm16 = (serverflags & 15);
 };
 
 void() SetNewParms =
 {
 	parm1 = IT_SHOTGUN | IT_AXE;
-	parm2 = 100;
+	parm2 = 50;
 	parm3 = 0;
-	parm4 = 25;
+	parm4 = 20;
 	parm5 = 0;
 	parm6 = 0;
 	parm7 = 0;
 	parm8 = 1;
 	parm9 = 0;
 	parm16 = (serverflags & 15);
+
+	parm10 = 50; // Max Health
+	parm11 = 20; // Max Shells
+	parm12 = 20; // Max Nails
+	parm13 = 5; // Max Rockets
+	parm14 = 20; // Max Cells
 };
 
 void() DecodeLevelParms =
@@ -114,6 +126,12 @@ void() DecodeLevelParms =
 	self.ammo_cells = parm7;
 	self.weapon = parm8;
 	self.armortype = parm9 * 0.01;
+
+	self.max_health = parm10;
+	self.cap_shells = parm11;
+	self.cap_nails = parm12;
+	self.cap_rockets = parm13;
+	self.cap_cells = parm14;
 
 	serverflags = serverflags | parm16;
 };
@@ -551,12 +569,12 @@ void() PutClientInServer =
 	local	entity spot;
 
 	self.classname = "player";
-	self.health = 100;
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_WALK;
 	self.show_hostile = 0;
-	self.max_health = 100;
+	self.max_health = 50;
+	self.health = self.max_health;
 	self.flags = FL_CLIENT;
 	self.air_finished = time + 12;
 	self.dmg = 2;   		// initial water damage
