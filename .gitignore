@@ -1,0 +1,15 @@
+backups
+.gfx.sh
+.qproj
+*.md
+*.cfg
+*.dem
+*.wad
+*.dat
+*.rc
+*.pak
+*.exe
+*.ini
+music
+progs.lno
+fteqcc64*
