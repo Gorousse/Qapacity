@@ -5,11 +5,10 @@ backups
 *.cfg
 *.dem
 *.wad
-*.dat
 *.rc
 *.pak
 *.exe
 *.ini
+saves
 music
-progs.lno
 fteqcc64*

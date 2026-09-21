@@ -68,8 +68,8 @@ void() SetChangeParms =
 	parm2 = self.health;
 	parm3 = self.armorvalue;
 
-	if (self.ammo_shells < 25)
-		parm4 = 25;
+	if (self.ammo_shells < 20)
+		parm4 = 20;
 
 	else
 		parm4 = self.ammo_shells;
