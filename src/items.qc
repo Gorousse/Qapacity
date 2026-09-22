@@ -101,12 +101,6 @@ float (entity e, float healamount, float ignore) T_Heal =
 		return 0;
 
 	healamount = ceil(healamount);
-
-	if ((ignore)) {
-		e.max_health = e.max_health + 10;
-		healamount = e.max_health * 2;
-	}
-	
 	e.health = e.health + healamount;
 
 	if ((!ignore) && (e.health >= e.max_health))
@@ -183,6 +177,9 @@ void() health_touch =
 
 	if (self.healtype == 2) // Megahealth?  Ignore max_health...
 	{
+		other.max_health = other.max_health + 10;
+		self.healamount = other.max_health;
+		
 		if (other.health >= 250)
 			return;
 		if (!T_Heal(other, self.healamount, 1))
@@ -195,11 +192,18 @@ void() health_touch =
 			return;
 	}
 
-	sprint(other, LOC_ITEM_PICKUP_HEALTH);
-	s = ftos(self.healamount);
-	sprint(other, s);
-	sprint(other, LOC_ITEM_TYPE_HEALTH);
-	sprint(other, "\n");
+	if (self.healtype == 2) {
+		sprint(other, LOC_HEALTH_CAP_INCREASE);
+		s = ftos(other.max_health);
+		sprint(other, s);
+		sprint(other, "\n");
+	} else {
+		sprint(other, LOC_ITEM_PICKUP_HEALTH);
+		s = ftos(self.healamount);
+		sprint(other, s);
+		sprint(other, LOC_ITEM_TYPE_HEALTH);
+		sprint(other, "\n");
+	}
 
 	// health touch sound
 	sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
@@ -472,6 +476,9 @@ void() weapon_touch =
 	local	entity	stemp;
 	local	float	leave;
 
+	local	string	ammotype;
+	local	string	s;
+
 	new = other.items;
 
 	if (!(other.flags & FL_CLIENT))
@@ -496,7 +503,14 @@ void() weapon_touch =
 		
 		hadammo = other.ammo_nails;
 		new = IT_NAILGUN;
-		other.cap_nails = other.cap_nails + 20;
+		
+		if (other.cap_nails < 400) {
+			other.cap_nails = other.cap_nails + 20;
+
+			s = ftos(other.cap_nails);
+			ammotype = " nails";
+		}
+
 		other.ammo_nails = other.cap_nails;
 	}
 
@@ -507,7 +521,14 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_SUPER_NAILGUN;
-		other.cap_nails = other.cap_nails + 20;
+
+		if (other.cap_nails < 400) {
+			other.cap_nails = other.cap_nails + 20;
+
+			s = ftos(other.cap_nails);
+			ammotype = " nails";
+		}
+
 		other.ammo_nails = other.cap_nails;
 	}
 
@@ -518,7 +539,14 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_SUPER_SHOTGUN;
-		other.cap_shells = other.cap_shells + 10;
+
+		if (other.cap_shells < 200) {
+			other.cap_shells = other.cap_shells + 10;
+
+			s = ftos(other.cap_shells);
+			ammotype = " shells";
+		}
+
 		other.ammo_shells = other.cap_shells;
 	}
 
@@ -529,7 +557,14 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_ROCKET_LAUNCHER;
-		other.cap_rockets = other.cap_rockets + 5;
+
+		if (other.cap_rockets < 200) {
+			other.cap_rockets = other.cap_rockets + 5;
+
+			s = ftos(other.cap_rockets);
+			ammotype = " rockets";
+		}
+
 		other.ammo_rockets = other.cap_rockets;
 	}
 
@@ -540,7 +575,14 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_GRENADE_LAUNCHER;
-		other.cap_rockets = other.cap_rockets + 5;
+		
+		if (other.cap_rockets < 200) {
+			other.cap_rockets = other.cap_rockets + 5;
+
+			s = ftos(other.cap_rockets);
+			ammotype = " rockets";
+		}
+
 		other.ammo_rockets = other.cap_rockets;
 	}
 
@@ -551,16 +593,32 @@ void() weapon_touch =
 
 		hadammo = other.ammo_rockets;
 		new = IT_LIGHTNING;
-		other.cap_cells = other.cap_cells + 20;
+
+		if (other.cap_cells < 200) {
+			other.cap_cells = other.cap_cells + 20;
+
+			s = ftos(other.cap_cells);
+			ammotype = " cells";
+		}
+
 		other.ammo_cells = other.cap_cells;
 	}
 
 	else
 		objerror ("weapon_touch: unknown classname");
 
+	// weapon pickup message
 	sprint (other, LOC_ITEM_PICKUP_NORMAL);
 	sprint (other, "the ");
 	sprint (other, self.netname);
+	
+	// upgrade string added to pickup message
+	if (s) {
+		sprint (other, LOC_AMMO_CAP_INCREASE);
+		sprint (other, s);
+		sprint (other, ammotype);
+	}
+	
 	sprint (other, "\n");
 	// weapon touch sound
 	sound (other, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);

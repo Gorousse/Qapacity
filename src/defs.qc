@@ -499,7 +499,7 @@ float	AS_MISSILE		= 4;
 .float		air_finished;	// when time > air_finished, start drowning
 .float		bubble_count;	// keeps track of the number of bubbles
 .string		deathtype;		// keeps track of how the player died
-.float	cap_shells, cap_nails, cap_rockets, cap_cells;
+.float		cap_shells, cap_nails, cap_rockets, cap_cells; // max carry capacity for all ammo types
 
 //
 // object stuff

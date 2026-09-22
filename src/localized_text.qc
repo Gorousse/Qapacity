@@ -104,7 +104,7 @@
 ==============================================================================*/
 
 #define LOC_ITEM_PICKUP_NORMAL      "You got "
-#define LOC_ITEM_PICKUP_HEALTH      "You receieve "
+#define LOC_ITEM_PICKUP_HEALTH      "You receive "
 
 #define LOC_ITEM_FROM_BACKPACK      " from a backpack"  // Unused..
 
@@ -512,3 +512,12 @@
 #define LOC_LQ_CAMERA_NONE              "Oh noes! No camera found! :("
 
 #endif // __LIBREQUAKE__
+
+/*==============================================================================
+
+			QAPACITY STRINGS
+
+==============================================================================*/
+
+#define LOC_AMMO_CAP_INCREASE    " - You can now carry "
+#define LOC_HEALTH_CAP_INCREASE  "Megahealth! - Your maximum health has increased to "

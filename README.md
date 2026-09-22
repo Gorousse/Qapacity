@@ -1,5 +1,7 @@
 # qapacity
-Simple progs.dat-based mod that adds ammo and health upgrades similar to the Dawn Of The Machine episode, albeit applied to vanilla Quake entities. It also works in multiplayer!
+Simple QuakeC mod that adds ammo and health upgrades similar to the Dawn Of The Machine episode, albeit applied to vanilla Quake entities.
+
+It also works in multiplayer!
 
 ## Requirements
 A vanilla Quake installation (either the original game or LibreQuake). I've tested both in QSS-M and Ironclaw.
@@ -36,7 +38,12 @@ Picking up weapons increases the corresponding ammo's capacity by:
 | Rockets | 5   |
 | Cells   | 10  |
 
-In practice, you'll always start one "step" higher than the base once you pick up a weapon that can actually use the ammo, so 40 for nails, 10 for rockets, etc., except for the shotguns obviously.
+In practice, you'll always start one upgrade higher than the base once you pick up a weapon that can actually use the ammo, so 40 for nails, 10 for rockets, etc., except for the shotgun obviously.
 
-## Future plans
-I didn't think I'd have this running in a single afternoon, let alone in multiplayer but here we are. I want to add different starting points and capacity upgrades for different difficulties
+## Future ideas
+I want to add different starting points and upgrade sizes for different difficulties, I'm also looking into Clientside QuakeC to add a HUD element showing your current caps. I might try to implement more features.
+
+## Credits / Special Thanks
+- id Software for making Quake and the original source code
+- LibreQuake for the source files I used to make this (and LibreQuake is cool, you should try it)
+- The Quake community (especially The Quake Wiki) for providing a lot of material for digesting QuakeC
