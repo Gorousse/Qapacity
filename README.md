@@ -7,7 +7,16 @@ It also works in multiplayer!
 A vanilla Quake installation (either the original game or LibreQuake). I've tested both in QSS-M and Ironclaw.
 
 ## Installation
-Put the `qapacity` folder in your Quake root folder (same directory as your id1 folder).
+### Nightdive Remaster
+Put the `qapacity` folder in the `rerelease` folder in your Quake root folder.
+
+To activate the mod you can either
+- Use a shortcut to `quake_x64_steam.exe` or `quake_x64_gog.exe` with the `-game "qapacity"` parameter
+- Use Steam's launch parameters setting (Right Click Quake => Properties => General => Launch Options => Advanced users may choose to enter modifications to their launch options) to launch Quake with the `-game "qapacity"` parameter
+- Run `game qapacity` from the game's console
+
+### Any other Source Port
+Put the `qapacity` folder in root folder (same directory as your id1 folder).
 
 To activate the mod you can either
 - Use a shortcut with the `-game "qapacity"` parameter
